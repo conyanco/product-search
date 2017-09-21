@@ -1,9 +1,13 @@
-var express = require("express");
-var bodyParser = require("body-parser");
-var MongoClient = require("mongodb").MongoClient;
+‘use strict’;
+
+const express = require("express");
+const bodyParser = require("body-parser");
+//const MongoClient = require("mongodb").MongoClient;
  
 // expressインスタンス生成
-var app = express();
+const app = express();
+
+const base_url = ‘’;
  
 // テンプレートエンジンの設定
 app.set("views", "./views");
@@ -16,14 +20,14 @@ app.use(bodyParser.json());
  
 // ルーティング設定
 app.use("/shop", (function () {
-  var router = express.Router();
+  let router = express.Router();
  
   // GET: /shop/search
   router.get("/search", function (request, response) {
-    var URL = "mongodb://localhost:27017/test";
-    var MAX_ITEMS_PER_PAGE = 1;
-    var query = request.query.q;
-    var page =request.query.pg ? parseInt(request.query.pg) : 1;
+    let URL = "mongodb://localhost:27017/test";
+    let MAX_ITEMS_PER_PAGE = 1;
+    let query = request.query.q;
+    let page =request.query.pg ? parseInt(request.query.pg) : 1;
  
     // 検索クエリがない場合、初期表示
     if (!query) {
@@ -44,7 +48,7 @@ app.use("/shop", (function () {
       ]);
     }).then((results) => {
       // ビューへ渡すデータを整形
-      var data = {
+      let data = {
         count: results[0],
         list: results[1],
         pagination: {
