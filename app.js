@@ -2,6 +2,8 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 //const MongoClient = require("mongodb").MongoClient;
+const http = require('http');
+
 const base_url = 'http://shopping.yahooapis.jp/ShoppingWebService/V1/json/itemSearch?&type=all&image_size=300&affiliate_type=vc&affiliate_id=http%3a%2f%2fck%2ejp%2eap%2evaluecommerce%2ecom%2fservlet%2freferral%3fsid%3d3103511%26pid%3d882391693%26vc_url%3d&appid=dj0zaiZpPUZCV2h2YUZxdnZ5SCZzPWNvbnN1bWVyc2VjcmV0Jng9NmQ-';
 let category = '13457';
 let keyword = 'fashion';
@@ -31,7 +33,8 @@ app.use("/shop", (function () {
 	 	return response.render("./search/index.ejs");
 	}
 	// 検索クエリがある場合、データベースを検索して結果リストを表示
-	MongoClient.connect(URL).then((db) => {
+/*	
+MongoClient.connect(URL).then((db) => {
 	return Promise.all([
 	// 検索総ヒット数
 	db.collection("shops").find({
@@ -55,6 +58,26 @@ app.use("/shop", (function () {
 	},
 	query: query
 	};
+*/
+
+
+http.get(url, (res) => {
+  let body = '';
+  res.setEncoding('utf8');
+  res.on('data', (chunk) => {
+    body += chunk;
+  });
+  res.on('end', (res) => {
+    res = JSON.parse(body);
+    JSON.parse(JSON.stringify(res), function(key, value){
+      console.log(key, value);
+
+    });
+  }).on('error', (e) => {
+    console.log(e.message);
+  });
+});
+
 	// ビューを表示
 	return response.render("./search/result-list.ejs", data);
 	}).catch((reason) => {
