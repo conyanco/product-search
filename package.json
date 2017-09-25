@@ -10,8 +10,12 @@
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.3",
     "express": "~4.15.2",
-    "jade": "~1.11.0",
+    "ejs": "~2.5.6",
     "morgan": "~1.8.1",
     "serve-favicon": "~2.4.2"
+  },
+ "engines": {
+    "node": "v6.11.X",
+    "npm": "3.10.X"
   }
 }
