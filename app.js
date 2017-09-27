@@ -80,7 +80,7 @@ http.get(url, (res) => {
 
 	// ビューを表示
 	return response.render("./search/result-list.ejs", data);
-}
+});
 /*	}).catch((reason) => {
 	// エラー処理
 	console.log(reason);
