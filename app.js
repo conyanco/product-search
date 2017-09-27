@@ -85,7 +85,7 @@ http.get(url, (res) => {
 	console.log(reason);
 	});*/
 	return router;
-	});
+/*	});*/
 	// サーバー起動
 	app.listen(3000);
 
