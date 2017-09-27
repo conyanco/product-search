@@ -82,7 +82,7 @@ http.get(url, (res) => {
 	return response.render("./search/result-list.ejs", data);
 /*	}).catch((reason) => {
 	// エラー処理
-	console.log(reason);*/
+	console.log(reason);
 	});*/
 	return router;
 	})());
