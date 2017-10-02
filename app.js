@@ -29,7 +29,8 @@ app.use("/shop", (function () {
 /*	 let URL = "mongodb://localhost:27017/test";
 	 let MAX_ITEMS_PER_PAGE = 1;
 	 let query = request.query.q;		           
-	 let page =request.query.pg ? parseInt(request.query.pg) : 1;			// 検索クエリがない場合、初期表示
+	 let page =request.query.pg ? parseInt(request.query.pg) : 1;	*/		
+// 検索クエリがない場合、初期表示
 	 if (!query) {
 	 	return response.render("./search/index.ejs");
 	}
