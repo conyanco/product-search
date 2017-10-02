@@ -26,16 +26,13 @@ app.use("/shop", (function () {
 	let router = express.Router();
          // GET: /shop/search
 	 router.get("/search", function (request, response) {
-/*	 let URL = "mongodb://localhost:27017/test";
-	 let MAX_ITEMS_PER_PAGE = 1;
-	 let query = request.query.q;		           
-	 let page =request.query.pg ? parseInt(request.query.pg) : 1;	*/		
+
 // 検索クエリがない場合、初期表示
 	 if (!query) {
 	 	return response.render("./search/index.ejs");
 	}
 	// 検索クエリがある場合、データベースを検索して結果リストを表示
-/*	
+
 
 
 //var url = 'https://api.github.com/users/rsp';
@@ -58,7 +55,7 @@ request.get({
 	// ビューを表示
 	return response.render("./search/result-list.ejs", data);
 });
-});
+
 /*	}).catch((reason) => {
 	// エラー処理
 	console.log(reason);
