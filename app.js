@@ -1,61 +1,50 @@
-'use strict';
-const express = require(‘express’);
-const bodyParser = require(‘body-parser’);
-const request = require('request');
-const http = require('http');
+var express = require('express');
+var path = require('path');
+var favicon = require('serve-favicon');
+var logger = require('morgan');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
 
-const base_url = 'http://shopping.yahooapis.jp/ShoppingWebService/V1/json/itemSearch?&type=all&image_size=300&affiliate_type=vc&affiliate_id=http%3a%2f%2fck%2ejp%2eap%2evaluecommerce%2ecom%2fservlet%2freferral%3fsid%3d3103511%26pid%3d882391693%26vc_url%3d&appid=dj0zaiZpPUZCV2h2YUZxdnZ5SCZzPWNvbnN1bWVyc2VjcmV0Jng9NmQ-';
-let category = '13457';
-let keyword = 'fashion';
-let url = base_url + keyword + '&category_id=' + category;
-// expressインスタンス生成
-let app = express();
-  
-// テンプレートエンジンの設定
-app.set("views", "./views");
-app.set("view engine", "ejs");
-   
-// ミドルウエアの設定
-app.use("/public", express.static("public"));
-app.use(bodyParser.urlencoded({ extended: true }));
+var index = require('./routes/index');
+var users = require('./routes/users');
+var search = require('./routes/search');
+
+//var call = require('./routes/app');
+var app = express();
+
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
+// uncomment after placing your favicon in /public
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(logger('dev'));
 app.use(bodyParser.json());
-    
-// ルーティング設定
-app.use("/shop", (function () {
-	let router = express.Router();
-         // GET: /shop/search
-	 router.get("/search", function (request, response) {
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
 
-// 検索クエリがない場合、初期表示
-	 if (!query) {
-	 	return response.render("./search/index.ejs");
-	}
-	// 検索クエリがある場合、データベースを検索して結果リストを表示
+app.use('/', index);
+//app.use('/call', app);
+app.use('/users', users);
+app.use('/search', search);
 
-
-
-//var url = 'https://api.github.com/users/rsp';
-
-request.get({
-    url: url,
-    json: true,
-    headers: {'User-Agent': 'request'}
-  }, (err, res, data) => {
-    if (err) {
-      console.log('Error:', err);
-    } else if (res.statusCode !== 200) {
-      console.log('Status:', res.statusCode);
-    } else {
-      // data is already parsed as JSON:
-      console.log(data.html_url);
-    }
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
 });
 
-	// ビューを表示
-	return response.render("./search/result-list.ejs", data);
+// error handler
+app.use(function(err, req, res, next) {
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+  // render the error page
+  res.status(err.status || 500);
+  res.render('error');
 });
 
-
-	// サーバー起動
-	app.listen(3000);
-
+module.exports = app;
