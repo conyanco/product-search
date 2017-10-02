@@ -1,6 +1,6 @@
 'use strict';
-const express = require("express");
-const bodyParser = require("body-parser");
+const express = require(‘express’);
+const bodyParser = require(‘body-parser’);
 const request = require('request');
 //const MongoClient = require("mongodb").MongoClient;
 const http = require('http');
@@ -56,12 +56,7 @@ request.get({
 	return response.render("./search/result-list.ejs", data);
 });
 
-/*	}).catch((reason) => {
-	// エラー処理
-	console.log(reason);
-	});*/
-	return router;
-/*	});*/
+
 	// サーバー起動
 	app.listen(3000);
 
