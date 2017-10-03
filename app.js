@@ -8,7 +8,7 @@ var http = require('http');
 var request = require('request');
 var index = require('./routes/index');
 var users = require('./routes/users');
-var search = require('index');
+var search = require('./routes/json');
 
 //var call = require('./routes/app');
 var app = express();
